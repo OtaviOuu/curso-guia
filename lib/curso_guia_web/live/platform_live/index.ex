@@ -1,4 +1,4 @@
-defmodule CursoGuiaWeb.PlataformLive.Index do
+defmodule CursoGuiaWeb.PlatformLive.Index do
   use CursoGuiaWeb, :live_view
 
   def render(assigns) do

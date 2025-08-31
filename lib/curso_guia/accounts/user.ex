@@ -4,11 +4,13 @@ defmodule CursoGuia.Accounts.User do
 
   schema "users" do
     field :email, :string
+    field :username, :string
     field :password, :string, virtual: true, redact: true
     field :hashed_password, :string, redact: true
     field :confirmed_at, :utc_datetime
     field :authenticated_at, :utc_datetime, virtual: true
     field :is_admin, :boolean, default: false
+
     timestamps(type: :utc_datetime)
   end
 
@@ -25,8 +27,18 @@ defmodule CursoGuia.Accounts.User do
   """
   def email_changeset(user, attrs, opts \\ []) do
     user
-    |> cast(attrs, [:email])
+    |> cast(attrs, [:email, :username])
     |> validate_email(opts)
+    |> validate_username()
+  end
+
+  defp validate_username(changeset) do
+    changeset
+    |> validate_required([:username])
+    |> validate_length(:username, min: 3, max: 20)
+    |> validate_format(:username, ~r/^[a-zA-Z0-9_]+$/,
+      message: "can only contain letters, numbers, and underscores"
+    )
   end
 
   defp validate_email(changeset, opts) do

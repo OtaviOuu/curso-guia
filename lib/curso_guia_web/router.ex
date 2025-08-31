@@ -35,14 +35,22 @@ defmodule CursoGuiaWeb.Router do
     end
   end
 
-  scope "/plataforms", CursoGuiaWeb do
+  scope "/platforms", CursoGuiaWeb do
     pipe_through :browser
 
-    live_session :plataforms,
+    live_session :platforms,
       on_mount: [
         {CursoGuiaWeb.UserAuth, :mount_current_scope}
       ] do
-      live "/", PlataformLive.Index, :index
+      live "/", PlatformLive.Index, :index
+    end
+
+    live_session :platforms_admin,
+      on_mount: [
+        {CursoGuiaWeb.UserAuth, :mount_current_scope},
+        {CursoGuiaWeb.UserAuth, :require_admin}
+      ] do
+      live "/new", PlatformLive.New, :new
     end
   end
 
