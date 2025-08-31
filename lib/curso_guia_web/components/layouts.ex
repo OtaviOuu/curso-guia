@@ -62,7 +62,9 @@ defmodule CursoGuiaWeb.Layouts do
           <.link navigate={~p"/courses"} class="text-sm/6 font-semibold text-gray-900">
             Cursos
           </.link>
-          <.link navigate={~p"/courses"} class="text-sm/6 font-semibold text-gray-900">Sobre</.link>
+          <.link navigate={~p"/platforms"} class="text-sm/6 font-semibold text-gray-900">
+            Plataformas
+          </.link>
           <.link navigate={~p"/courses"} class="text-sm/6 font-semibold text-gray-900">
             Contato
           </.link>
@@ -77,7 +79,7 @@ defmodule CursoGuiaWeb.Layouts do
               Admin
             </.link>
             <.link
-              navigate={~p"/me"}
+              navigate={~p"/users/settings"}
               class="text-sm/6 font-semibold text-gray-900"
             >
               {@current_scope.user.username}
