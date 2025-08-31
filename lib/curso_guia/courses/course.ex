@@ -7,6 +7,7 @@ defmodule CursoGuia.Courses.Course do
   schema "courses" do
     field :title, :string
     field :description, :string
+    field :cover, :string
     field :price, :integer
     timestamps()
   end
@@ -15,6 +16,9 @@ defmodule CursoGuia.Courses.Course do
     course
     |> cast(attrs, [:title, :description, :price])
     |> validate_required([:title, :description, :price])
+    |> validate_length(:title, min: 3, max: 100)
+    |> validate_length(:description, min: 3, max: 100)
+    |> validate_number(:price, greater_than: 0)
   end
 
   @doc false
@@ -22,5 +26,8 @@ defmodule CursoGuia.Courses.Course do
     %Course{}
     |> cast(attrs, [:title, :description, :price])
     |> validate_required([:title, :description, :price])
+    |> validate_length(:title, min: 3, max: 100)
+    |> validate_length(:description, min: 3, max: 100)
+    |> validate_number(:price, greater_than: 0)
   end
 end

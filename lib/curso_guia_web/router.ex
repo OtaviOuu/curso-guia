@@ -40,7 +40,9 @@ defmodule CursoGuiaWeb.Router do
         {CursoGuiaWeb.UserAuth, :mount_current_scope},
         {CursoGuiaWeb.UserAuth, :require_admin}
       ] do
+      live "/admin", AdminLive.Index, :index
       live "/platforms/new", PlatformLive.New, :new
+      live "/courses/new", CourseLive.New, :new
     end
   end
 
