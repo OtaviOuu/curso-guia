@@ -94,7 +94,7 @@ defmodule CursoGuiaWeb.Layouts do
       </nav>
     </header>
 
-    <main class="container mx-auto sm:px-6 lg:px-8">
+    <main class="container mx-auto sm:px-6 lg:px-8 pt-20">
       {render_slot(@inner_block)}
     </main>
 
