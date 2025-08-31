@@ -1,8 +1,11 @@
 defmodule CursoGuiaWeb.CourseLive.Index do
   use CursoGuiaWeb, :live_view
 
+  alias CursoGuia.Courses
+
   def mount(_params, _session, socket) do
-    {:ok, socket}
+    courses = Courses.list_courses()
+    {:ok, assign(socket, courses: courses)}
   end
 
   def render(assigns) do
@@ -20,7 +23,7 @@ defmodule CursoGuiaWeb.CourseLive.Index do
             </a>
           </div>
           <div class="mt-6 grid grid-cols-1 gap-x-8 gap-y-8 sm:grid-cols-2 sm:gap-y-10 lg:grid-cols-4">
-            <.course_card :for={_1 <- 1..10} />
+            <.course_card :for={course <- @courses} course={course} />
           </div>
         </div>
       </div>
@@ -49,13 +52,18 @@ defmodule CursoGuiaWeb.CourseLive.Index do
       <div class="mt-4 flex items-center justify-between space-x-8 text-base font-medium text-gray-900">
         <h3>
           <.link navigate="/courses/id" class="hover:underline">
-            <span aria-hidden="true" class="absolute inset-0"></span> Fusion
+            <span aria-hidden="true" class="absolute inset-0"></span> {@course.title}
           </.link>
         </h3>
-        <p>$49</p>
+        <p>${@course.price |> cents_to_brl()}</p>
       </div>
       <p class="mt-1 text-sm text-gray-500">Hotmart</p>
     </div>
     """
+  end
+
+  defp cents_to_brl(cents) do
+    reais = cents / 100
+    :erlang.float_to_binary(reais, decimals: 2)
   end
 end
