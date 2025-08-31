@@ -48,16 +48,13 @@ defmodule CursoGuiaWeb.Layouts do
             <a href="https://phoenixframework.org/" class="btn btn-ghost">Website</a>
           </li>
           <li>
-            <a href="https://github.com/phoenixframework/phoenix" class="btn btn-ghost">GitHub</a>
-          </li>
-          <li>
             <a href="https://hexdocs.pm/phoenix/overview.html" class="btn btn-primary">
               Get Started <span aria-hidden="true">&rarr;</span>
             </a>
           </li>
           <%= if @current_scope do %>
             <li>
-              {@current_scope.user.email}
+              logado {@current_scope.user.email}
             </li>
             <li>
               <.link href={~p"/users/settings"}>Settings</.link>
