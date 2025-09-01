@@ -2,10 +2,19 @@ defmodule CursoGuiaWeb.CourseLive.New do
   use CursoGuiaWeb, :live_view
 
   alias CursoGuia.Courses
+  alias CursoGuia.Platforms
 
   def mount(_params, _session, socket) do
     changeset = Courses.change_course(%{})
-    {:ok, assign(socket, course_form: to_form(changeset))}
+
+    options_for_platforms = Platforms.list_platforms() |> Enum.map(&{&1.name, &1.id})
+
+    socket =
+      socket
+      |> assign(course_form: to_form(changeset))
+      |> assign(platforms: options_for_platforms)
+
+    {:ok, socket}
   end
 
   def render(assigns) do
@@ -15,7 +24,14 @@ defmodule CursoGuiaWeb.CourseLive.New do
         <.input field={@course_form[:title]} label="Title" />
         <.input field={@course_form[:description]} label="Description" />
         <.input field={@course_form[:cover]} label="Cover" />
+        <.input
+          field={@course_form[:platform_id]}
+          label="Platform"
+          type="select"
+          options={@platforms}
+        />
         <.input field={@course_form[:price]} label="Price" type="number" />
+
         <.button>Save</.button>
       </.form>
     </Layouts.app_sidebar>

@@ -57,7 +57,7 @@ defmodule CursoGuiaWeb.CourseLive.Index do
         </h3>
         <p>${@course.price |> cents_to_brl()}</p>
       </div>
-      <p class="mt-1 text-sm text-gray-500">Hotmart</p>
+      <p class="mt-1 text-sm text-gray-500">{@course.platform.name}</p>
     </div>
     """
   end

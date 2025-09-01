@@ -4,5 +4,6 @@ defmodule CursoGuia.Courses.ListCourses do
 
   def call do
     Repo.all(Course)
+    |> Repo.preload(:platform)
   end
 end
