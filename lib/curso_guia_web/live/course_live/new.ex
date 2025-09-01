@@ -20,7 +20,7 @@ defmodule CursoGuiaWeb.CourseLive.New do
 
   def render(assigns) do
     ~H"""
-    <Layouts.app_sidebar current_scope={@current_scope} flash={@flash}>
+    <Layouts.app current_scope={@current_scope} flash={@flash}>
       <div class="flex items-center">
         <div class="relative flex justify-start">
           <span class="bg-white pr-3 text-base font-semibold text-gray-900">Projects</span>
@@ -55,7 +55,7 @@ defmodule CursoGuiaWeb.CourseLive.New do
 
         <.button>Search</.button>
       </.form>
-    </Layouts.app_sidebar>
+    </Layouts.app>
     """
   end
 
