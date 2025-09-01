@@ -24,7 +24,8 @@ defmodule CursoGuiaWeb.Endpoint do
     at: "/",
     from: :curso_guia,
     gzip: not code_reloading?,
-    only: CursoGuiaWeb.static_paths()
+    only: CursoGuiaWeb.static_paths(),
+    cache_control_for_etags: "public, max-age=604800"
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.
