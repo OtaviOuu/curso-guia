@@ -60,12 +60,11 @@ defmodule CursoGuiaWeb.LandingLive.Index do
           </div>
           <div class="hidden lg:flex lg:gap-x-12">
             <.link navigate={~p"/courses"} class="text-sm/6 font-semibold text-gray-900">
-              Avaliações
-            </.link>
-            <.link navigate={~p"/courses"} class="text-sm/6 font-semibold text-gray-900">
               Cursos
             </.link>
-            <.link navigate={~p"/courses"} class="text-sm/6 font-semibold text-gray-900">Sobre</.link>
+            <.link navigate={~p"/platforms"} class="text-sm/6 font-semibold text-gray-900">
+              Plataformas
+            </.link>
             <.link navigate={~p"/courses"} class="text-sm/6 font-semibold text-gray-900">
               Contato
             </.link>

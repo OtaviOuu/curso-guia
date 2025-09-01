@@ -11,14 +11,14 @@ defmodule CursoGuiaWeb.PlatformLive.New do
 
   def render(assigns) do
     ~H"""
-    <Layouts.app_sidebar current_scope={@current_scope} flash={@flash}>
+    <Layouts.app current_scope={@current_scope} flash={@flash}>
       <.form for={@platform_form} phx-submit="save">
         <.input field={@platform_form[:name]} label="Name" />
         <.input field={@platform_form[:logo]} label="Logo" />
         <.input field={@platform_form[:href]} label="Href" />
         <.button>Save</.button>
       </.form>
-    </Layouts.app_sidebar>
+    </Layouts.app>
     """
   end
 
