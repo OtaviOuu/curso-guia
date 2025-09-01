@@ -4,4 +4,5 @@ defmodule CursoGuia.Courses do
   defdelegate change_course(attrs), to: Courses.GetChangeset, as: :call
   defdelegate list_courses, to: Courses.ListCourses, as: :call
   defdelegate create_course(attrs), to: Courses.CreateCourse, as: :call
+  defdelegate get_course(id), to: Courses.GetCourse, as: :call
 end

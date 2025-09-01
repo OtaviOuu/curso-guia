@@ -29,7 +29,7 @@ defmodule CursoGuiaWeb.Router do
 
       # Courses
       live "/courses", CourseLive.Index, :index
-      live "/courses/id", CourseLive.Show, :show
+      live "/courses/:id", CourseLive.Show, :show
 
       # Platforms
       live "/platforms", PlatformLive.Index, :index

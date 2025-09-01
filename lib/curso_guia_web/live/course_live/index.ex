@@ -36,7 +36,7 @@ defmodule CursoGuiaWeb.CourseLive.Index do
     <div class="group relative">
       <div class="relative">
         <img
-          src="https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-05-related-product-01.jpg"
+          src={@course.cover}
           alt="Payment application dashboard screenshot with transaction table, financial highlights, and main clients on colorful purple background."
           class="aspect-4/3 w-full rounded-lg bg-gray-100 object-cover"
         />
@@ -51,7 +51,7 @@ defmodule CursoGuiaWeb.CourseLive.Index do
       </div>
       <div class="mt-4 flex items-center justify-between space-x-8 text-base font-medium text-gray-900">
         <h3>
-          <.link navigate="/courses/id" class="hover:underline">
+          <.link navigate={~p"/courses/#{@course.id}"} class="hover:underline">
             <span aria-hidden="true" class="absolute inset-0"></span> {@course.title}
           </.link>
         </h3>

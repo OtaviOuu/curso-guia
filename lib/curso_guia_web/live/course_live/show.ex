@@ -1,11 +1,16 @@
 defmodule CursoGuiaWeb.CourseLive.Show do
   use CursoGuiaWeb, :live_view
 
+  alias CursoGuia.Courses
+
+  def mount(%{"id" => id}, _session, socket) do
+    course = Courses.get_course(id)
+    {:ok, assign(socket, course: course)}
+  end
+
   def render(assigns) do
     ~H"""
     <Layouts.app flash={@flash} current_scope={@current_scope}>
-      <!-- Include this script tag or install `@tailwindplus/elements` via npm: -->
-    <!-- <script src="https://cdn.jsdelivr.net/npm/@tailwindplus/elements@1" type="module"></script> -->
       <div class="bg-white">
         <div class="mx-auto px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
           <!-- Product -->
@@ -13,7 +18,7 @@ defmodule CursoGuiaWeb.CourseLive.Show do
             <!-- Product image -->
             <div class="lg:col-span-4 lg:row-end-1">
               <img
-                src="https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-05-product-01.jpg"
+                src={@course.cover}
                 alt="Sample of 30 icons with friendly and fun details in outline, filled, and brand color styles."
                 class="aspect-4/3 w-full rounded-lg bg-gray-100 object-cover"
               />
@@ -24,7 +29,7 @@ defmodule CursoGuiaWeb.CourseLive.Show do
               <div class="flex flex-col-reverse">
                 <div class="mt-4">
                   <h1 class="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
-                    Application UI Icon Pack
+                    {@course.title}
                   </h1>
 
                   <h2 id="information-heading" class="sr-only">Product information</h2>
@@ -108,7 +113,7 @@ defmodule CursoGuiaWeb.CourseLive.Show do
               </div>
 
               <p class="mt-6 text-gray-500">
-                The Application UI Icon Pack comes with over 200 icons in 3 styles: outline, filled, and branded. This playful icon pack is tailored for complex application user interfaces with a friendly and legible look.
+                {@course.description}
               </p>
 
               <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2">
@@ -133,7 +138,7 @@ defmodule CursoGuiaWeb.CourseLive.Show do
                     role="list"
                     class="list-disc space-y-1 pl-5 text-sm/6 text-gray-500 marker:text-gray-300"
                   >
-                    <li class="pl-2">200+ SVG icons in 3 unique styles</li>
+                    <li class="pl-2">{@course.platform.name}</li>
                     <li class="pl-2">Compatible with Figma, Sketch, and Adobe XD</li>
                     <li class="pl-2">Drawn on 24 x 24 pixel grid</li>
                   </ul>

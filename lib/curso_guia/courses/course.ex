@@ -15,14 +15,14 @@ defmodule CursoGuia.Courses.Course do
 
   def changeset(course, attrs) do
     course
-    |> cast(attrs, [:title, :description, :price, :platform_id])
+    |> cast(attrs, [:title, :description, :price, :platform_id, :cover])
     |> validate()
   end
 
   @doc false
   def changeset(attrs) do
     %Course{}
-    |> cast(attrs, [:title, :description, :price, :platform_id])
+    |> cast(attrs, [:title, :description, :price, :platform_id, :cover])
     |> validate()
   end
 
