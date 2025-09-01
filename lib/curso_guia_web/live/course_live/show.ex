@@ -234,8 +234,8 @@ defmodule CursoGuiaWeb.CourseLive.Show do
     <div class="flex space-x-4 text-sm text-gray-500">
       <div class="flex-none py-10">
         <img
-          src="https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=256&h=256&q=80"
-          alt=""
+          src="https://fabianlee.org/wp-content/uploads/2017/05/golang-color-icon2.png"
+          alt="Profile image"
           class="size-10 rounded-full bg-gray-100"
         />
       </div>
