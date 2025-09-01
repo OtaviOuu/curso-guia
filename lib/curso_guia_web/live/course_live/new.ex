@@ -74,24 +74,26 @@ defmodule CursoGuiaWeb.CourseLive.New do
     end
   end
 
-  def handle_event("scrape", %{"url" => url}, socket) do
-    case Platforms.get_attrs_from_platform(url) do
-      {:ok, attrs} ->
-        changeset = Courses.change_course(attrs)
+  def handle_event("scrape", %{"url" => url}, socket) when length(url) > 0 do
+    current_live_view_pid = self()
 
-        socket =
-          socket
-          |> put_flash(:info, "Successfully scraped #{url}")
-          |> assign(course_form: to_form(changeset, action: :validate))
+    Task.start_link(fn ->
+      send(current_live_view_pid, Platforms.get_attrs_from_platform(url))
+    end)
 
-        {:noreply, socket}
+    {:noreply, socket}
+  end
 
-      {:error, reason} ->
-        socket =
-          socket
-          |> put_flash(:error, "Failed: #{reason}")
+  def handle_event("scrape", _, socket), do: {:noreply, put_flash(socket, :error, "Invalid URL")}
 
-        {:noreply, socket}
-    end
+  def handle_info({:ok, attrs}, socket) do
+    IO.inspect(attrs)
+    changeset = Courses.change_course(attrs)
+
+    socket =
+      socket
+      |> assign(course_form: to_form(changeset, action: :validate))
+
+    {:noreply, socket}
   end
 end
