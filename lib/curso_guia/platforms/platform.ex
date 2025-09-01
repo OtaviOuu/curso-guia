@@ -30,13 +30,7 @@ defmodule CursoGuia.Platforms.Platform do
   defp validate(changeset) do
     changeset
     |> validate_length(:name, min: 3, max: 50)
-    |> validate_inclusion(:href, ["http", "https"],
-      message: "must start with http or https",
-      count: 1
-    )
-    |> validate_inclusion(:logo, ["http", "https"],
-      message: "must start with http or https",
-      count: 1
-    )
+    |> validate_format(:logo, ~r/^https?:\/\//, message: "must start with http or https")
+    |> validate_format(:href, ~r/^https?:\/\//, message: "must start with http or https")
   end
 end
