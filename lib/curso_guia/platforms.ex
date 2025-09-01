@@ -3,6 +3,7 @@ defmodule CursoGuia.Platforms do
 
   defdelegate change_platform(attrs), to: Platforms.GetChangeset, as: :call
   defdelegate list_platforms, to: Platforms.ListPlatform, as: :call
+  defdelegate get_attrs_from_platform(url), to: Platforms.GetAttrsFromPlatform, as: :call
 
   defdelegate create_platform(attrs),
     to: Platforms.CreatePlatform,
