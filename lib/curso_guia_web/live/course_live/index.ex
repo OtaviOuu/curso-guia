@@ -49,6 +49,7 @@ defmodule CursoGuiaWeb.CourseLive.Index do
           </div>
         </div>
       </div>
+
       <div class="mt-4 flex items-center justify-between space-x-8 text-base font-medium text-gray-900">
         <h3>
           <.link navigate={~p"/courses/#{@course.id}"} class="hover:underline">
@@ -57,7 +58,15 @@ defmodule CursoGuiaWeb.CourseLive.Index do
         </h3>
         <p>${@course.price |> cents_to_brl()}</p>
       </div>
-      <p class="mt-1 text-sm text-gray-500">{@course.platform.name}</p>
+
+      <div class="mt-1 flex items-center gap-2 text-sm text-gray-500">
+        <img
+          src={@course.platform.logo}
+          alt={@course.platform.name}
+          class="h-4 w-4 object-contain"
+        />
+        <span>{@course.platform.name}</span>
+      </div>
     </div>
     """
   end

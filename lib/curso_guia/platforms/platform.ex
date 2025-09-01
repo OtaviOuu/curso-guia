@@ -16,7 +16,7 @@ defmodule CursoGuia.Platforms.Platform do
     platform
     |> cast(attrs, [:name, :logo, :href])
     |> validate_required([:name, :logo, :href])
-    |> validate_length(:name, min: 3, max: 50)
+    |> validate()
   end
 
   @doc false
@@ -24,6 +24,19 @@ defmodule CursoGuia.Platforms.Platform do
     %Platform{}
     |> cast(attrs, [:name, :logo, :href])
     |> validate_required([:name, :logo, :href])
+    |> validate()
+  end
+
+  defp validate(changeset) do
+    changeset
     |> validate_length(:name, min: 3, max: 50)
+    |> validate_inclusion(:href, ["http", "https"],
+      message: "must start with http or https",
+      count: 1
+    )
+    |> validate_inclusion(:logo, ["http", "https"],
+      message: "must start with http or https",
+      count: 1
+    )
   end
 end

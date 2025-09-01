@@ -32,5 +32,9 @@ defmodule CursoGuia.Courses.Course do
     |> validate_length(:title, min: 3, max: 100)
     |> validate_length(:description, min: 3, max: 100)
     |> validate_number(:price, greater_than: 0)
+    |> validate_inclusion(:cover, ["http", "https"],
+      message: "must start with http or https",
+      count: 1
+    )
   end
 end
