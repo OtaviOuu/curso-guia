@@ -9,7 +9,7 @@ defmodule CursoGuia.Accounts.UserNotifier do
     email =
       new()
       |> to(recipient)
-      |> from({"CursoGuia", "contact@example.com"})
+      |> from({"CursoGuia", "conta.otaviou@gmail.com"})
       |> subject(subject)
       |> text_body(body)
 
