@@ -379,7 +379,7 @@ defmodule CursoGuiaWeb.CourseLive.Show do
     ~H"""
     <.link
       navigate={~p"/platforms/#{@course.platform.id}"}
-      class="flex items-center gap-4 bg-gray-100 rounded-lg px-6 py-3 shadow-md w-full max-w-xl"
+      class="bg-gray-50 rounded-lg flex items-center gap-4 bg-gray-100 px-6 py-3 border border-gray-200 w-full max-w-xl"
     >
       <img src={@course.platform.logo} alt="Logo" class="w-8 h-8 rounded-full object-contain" />
       <div class="flex flex-col">
