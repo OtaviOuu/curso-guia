@@ -9,20 +9,21 @@ defmodule CursoGuia.Courses.Course do
     field :description, :string
     field :cover, :string
     field :price, :integer
+    field :rating, :integer, default: 0
     belongs_to :platform, CursoGuia.Platforms.Platform
     timestamps()
   end
 
   def changeset(course, attrs) do
     course
-    |> cast(attrs, [:title, :description, :price, :platform_id, :cover])
+    |> cast(attrs, [:title, :description, :price, :platform_id, :cover, :rating])
     |> validate()
   end
 
   @doc false
   def changeset(attrs) do
     %Course{}
-    |> cast(attrs, [:title, :description, :price, :platform_id, :cover])
+    |> cast(attrs, [:title, :description, :price, :platform_id, :cover, :rating])
     |> validate()
   end
 
@@ -33,5 +34,6 @@ defmodule CursoGuia.Courses.Course do
     |> validate_length(:description, min: 3, max: 100)
     |> validate_number(:price, greater_than: 0)
     |> validate_format(:cover, ~r/^https?:\/\//, message: "must start with http or https")
+    |> validate_number(:rating, greater_than_or_equal_to: 0, less_than_or_equal_to: 10)
   end
 end

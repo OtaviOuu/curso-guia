@@ -6,7 +6,7 @@ defmodule CursoGuia.Reviews.PubSub.PublishReviewToCourseReviewChannel do
     Phoenix.PubSub.broadcast(
       CursoGuia.PubSub,
       "#{@channel}:#{review.course_id}",
-      {:review_created, review |> Repo.preload(:user)}
+      {:review_created, review |> Repo.preload([:user, :course])}
     )
 
     {:ok, review}

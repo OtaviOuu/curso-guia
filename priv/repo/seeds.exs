@@ -41,6 +41,7 @@ case Courses.create_course(%{
        cover:
          "https://static-media.hotmart.com/WiJmWcZpgYGRr8Q5ogTtLnk0Hjg=/300x300/smart/filters:format(webp):background_color(white)/hotmart/product_pictures/1ff67a67-4901-4834-afe4-8d6d3e1a2aa5/Ativo384x.png?w=920",
        price: 100,
+       rating: 0,
        platform_id: 1
      }) do
   {:ok, course} -> IO.puts("Created course #{course.title}")
@@ -53,6 +54,7 @@ case Courses.create_course(%{
        cover:
          "https://img.freepik.com/vetores-premium/capa-do-cassino-3d-caca-niqueis-e-roleta-com-cartas-arte-do-plano-de-fundo-da-cena-ilustracao-vetorial_3482-4279.jpg",
        price: 100,
+       rating: 0,
        platform_id: 2
      }) do
   {:ok, course} -> IO.puts("Created course #{course.title}")

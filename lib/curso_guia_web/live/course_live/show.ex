@@ -12,19 +12,11 @@ defmodule CursoGuiaWeb.CourseLive.Show do
     course = Courses.get_course(course_id)
     reviews = Reviews.list_reviews(course_id)
 
-    average_rating =
-      case reviews do
-        [] -> 0
-        _ -> (Enum.sum(Enum.map(reviews, & &1.rating)) / length(reviews)) |> round()
-      end
-
-    dbg(average_rating)
-
     socket =
       socket
       |> assign(course: course)
       |> assign(reviews: reviews)
-      |> assign(average_rating: average_rating)
+      |> assign(average_rating: course.rating)
       |> maybe_form()
 
     {:ok, socket}
@@ -422,15 +414,13 @@ defmodule CursoGuiaWeb.CourseLive.Show do
 
   def handle_info({:review_created, review}, socket) do
     reviews = [review | socket.assigns.reviews]
+    new_rating = review.course.rating
 
     socket =
       socket
       |> put_flash(:info, "New review created")
-      |> assign(:reviews, reviews)
-      |> update(:average_rating, fn _ ->
-        (Enum.sum(Enum.map(reviews, & &1.rating)) / length(reviews))
-        |> round()
-      end)
+      |> assign(reviews: reviews)
+      |> assign(average_rating: new_rating)
 
     {:noreply, socket}
   end
