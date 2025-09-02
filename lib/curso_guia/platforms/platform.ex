@@ -8,7 +8,7 @@ defmodule CursoGuia.Platforms.Platform do
     field :name, :string
     field :logo, :string
     field :href, :string
-
+    has_many :courses, CursoGuia.Courses.Course
     timestamps()
   end
 
