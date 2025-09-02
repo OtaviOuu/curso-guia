@@ -25,7 +25,7 @@ defmodule CursoGuiaWeb.PlatformLive.Index do
   def platform(assigns) do
     ~H"""
     <.link
-      navigate={@platform.href}
+      navigate={~p"/platforms/#{@platform.id}"}
       class="relative flex items-center space-x-3 rounded-lg border border-gray-300 bg-white px-6 py-5 shadow-xs focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-indigo-600 hover:border-gray-400"
     >
       <div class="shrink-0">
