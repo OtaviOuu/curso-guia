@@ -74,10 +74,12 @@ defmodule CursoGuiaWeb.CourseLive.Show do
               <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2">
                 <button
                   type="button"
-                  class="flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50 focus:outline-hidden"
+                  class="flex w-full items-center justify-center gap-2 rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50 focus:outline-hidden"
                 >
-                  Pay $220
+                  <.icon name="hero-currency-dollar" />
+                  {@course.price |> format_price()}
                 </button>
+
                 <button
                   type="button"
                   class="flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-50 px-8 py-3 text-base font-medium text-indigo-700 hover:bg-indigo-100 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50 focus:outline-hidden"
@@ -91,7 +93,7 @@ defmodule CursoGuiaWeb.CourseLive.Show do
                 <div class="mt-4">
                   <ul
                     role="list"
-                    class="list-disc space-y-1 pl-5 text-sm/6 text-gray-500 marker:text-gray-300"
+                    class="list-disc space-y-2 pl-5 text-sm/6 text-gray-500 marker:text-gray-300"
                   >
                     <li class="pl-2">
                       <span class="inline-flex items-center gap-x-1.5 rounded-full bg-red-100 px-2 py-1 text-xs font-medium text-red-700">
@@ -101,7 +103,14 @@ defmodule CursoGuiaWeb.CourseLive.Show do
                         {@course.views} views
                       </span>
                     </li>
-                    <li class="pl-2">{@course.platform.name}</li>
+                    <li class="pl-2">
+                      <span class="inline-flex items-center gap-x-1.5 rounded-full bg-red-100 px-2 py-1 text-xs font-medium text-red-700">
+                        <svg viewBox="0 0 6 6" aria-hidden="true" class="size-1.5 fill-red-500">
+                          <circle r="3" cx="3" cy="3" />
+                        </svg>
+                        {@course.platform.name}
+                      </span>
+                    </li>
 
                     <li class="pl-2">Drawn on 24 x 24 pixel grid</li>
                   </ul>
@@ -451,5 +460,9 @@ defmodule CursoGuiaWeb.CourseLive.Show do
       |> assign(average_rating: new_rating)
 
     {:noreply, socket}
+  end
+
+  defp format_price(price) when is_integer(price) do
+    (price / 100) |> :erlang.float_to_binary(decimals: 2)
   end
 end
