@@ -8,10 +8,19 @@ defmodule CursoGuiaWeb.CourseLive.Show do
     course = Courses.get_course(course_id)
     reviews = Reviews.list_reviews(course_id)
 
+    average_rating =
+      case reviews do
+        [] -> 0
+        _ -> (Enum.sum(Enum.map(reviews, & &1.rating)) / length(reviews)) |> round()
+      end
+
+    dbg(average_rating)
+
     socket =
       socket
       |> assign(course: course)
       |> assign(reviews: reviews)
+      |> assign(average_rating: average_rating)
       |> maybe_form()
 
     {:ok, socket}
@@ -61,7 +70,7 @@ defmodule CursoGuiaWeb.CourseLive.Show do
                     Version 1.0 (Updated <time datetime="2021-06-05">June 5, 2021</time>)
                   </p>
                 </div>
-                <.stars rating={1} />
+                <.stars rating={@average_rating} />
               </div>
 
               <p class="mt-6 text-gray-500">
@@ -274,21 +283,24 @@ defmodule CursoGuiaWeb.CourseLive.Show do
   def stars(assigns) do
     ~H"""
     <div class="mt-4 flex items-center">
-      <!-- Active: "text-yellow-400", Default: "text-gray-300" -->
-      <svg
-        :for={_ <- 1..@rating}
-        viewBox="0 0 20 20"
-        fill="currentColor"
-        data-slot="icon"
-        aria-hidden="true"
-        class="size-5 shrink-0 text-yellow-400"
-      >
-        <path
-          d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401Z"
-          clip-rule="evenodd"
-          fill-rule="evenodd"
-        />
-      </svg>
+      <%= if @rating > 0 do %>
+        <svg
+          :for={_ <- 1..@rating}
+          viewBox="0 0 20 20"
+          fill="currentColor"
+          data-slot="icon"
+          aria-hidden="true"
+          class="size-5 shrink-0 text-yellow-400"
+        >
+          <path
+            d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401Z"
+            clip-rule="evenodd"
+            fill-rule="evenodd"
+          />
+        </svg>
+      <% else %>
+        Sem avaliações ainda
+      <% end %>
     </div>
     """
   end
@@ -298,7 +310,7 @@ defmodule CursoGuiaWeb.CourseLive.Show do
     <div class="flex items-start space-x-4">
       <div class="shrink-0">
         <img
-          src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+          src="https://fabianlee.org/wp-content/uploads/2017/05/golang-color-icon2.png"
           alt=""
           class="inline-block size-10 rounded-full bg-gray-100 outline -outline-offset-1 outline-black/5"
         />
@@ -310,7 +322,7 @@ defmodule CursoGuiaWeb.CourseLive.Show do
             id="rating"
             type="number"
             min="1"
-            max="5"
+            max="10"
             placeholder="Rate the course"
           />
 
