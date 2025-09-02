@@ -10,8 +10,8 @@ defmodule CursoGuia.Reviews.CreateReview do
     |> Repo.insert()
     |> case do
       {:ok, review} ->
-        PubSub.PublishReviewToCourseReviewChannel.call(review)
         UpdateCourseRating.call(review.course_id)
+        PubSub.PublishReviewToCourseReviewChannel.call(review)
 
       {:error, changeset} ->
         {:error, changeset}
