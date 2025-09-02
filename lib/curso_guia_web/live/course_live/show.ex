@@ -114,75 +114,7 @@ defmodule CursoGuiaWeb.CourseLive.Show do
             </div>
 
             <div class="mx-auto mt-16 w-full max-w-2xl lg:col-span-4 lg:mt-0 lg:max-w-none">
-              <el-tab-group>
-                <el-tab-panels>
-                  <.reviews form={@review_form} current_scope={@current_scope} reviews={@reviews} />
-
-                  <div id="tab-panel-faq" hidden class="text-sm text-gray-500">
-                    <h3 class="sr-only">Frequently Asked Questions</h3>
-
-                    <dl>
-                      <dt class="mt-10 font-medium text-gray-900">What format are these icons?</dt>
-                      <dd class="mt-2 text-sm/6 text-gray-500">
-                        <p>
-                          The icons are in SVG (Scalable Vector Graphic) format. They can be imported into your design tool of choice and used directly in code.
-                        </p>
-                      </dd>
-                      <dt class="mt-10 font-medium text-gray-900">
-                        Can I use the icons at different sizes?
-                      </dt>
-                      <dd class="mt-2 text-sm/6 text-gray-500">
-                        <p>
-                          Yes. The icons are drawn on a 24 x 24 pixel grid, but the icons can be scaled to different sizes as needed. We don&#039;t recommend going smaller than 20 x 20 or larger than 64 x 64 to retain legibility and visual balance.
-                        </p>
-                      </dd>
-                      <dt class="mt-10 font-medium text-gray-900">
-                        Do I have to add attribution to my projects?
-                      </dt>
-                      <dd class="mt-2 text-sm/6 text-gray-500">
-                        <p>
-                          No. You are allowed to use these icons freely in your personal and professional work. If you enjoy the icon pack, feel free to tell others!
-                        </p>
-                      </dd>
-                    </dl>
-                  </div>
-
-                  <div id="tab-panel-license" hidden class="pt-10">
-                    <h3 class="sr-only">License</h3>
-
-                    <div class="text-sm text-gray-500 [&_h4]:mt-5 [&_h4]:font-medium [&_h4]:text-gray-900 [&_li]:pl-2 [&_li::marker]:text-gray-300 [&_p]:my-2 [&_p]:text-sm/6 [&_ul]:my-4 [&_ul]:list-disc [&_ul]:space-y-1 [&_ul]:pl-5 [&_ul]:text-sm/6 [&>:first-child]:mt-0">
-                      <h4>Overview</h4>
-
-                      <p>
-                        For personal and professional use. You cannot resell or redistribute these icons in their original or modified state.
-                      </p>
-
-                      <ul role="list">
-                        <li>You're allowed to use the icons in unlimited projects.</li>
-                        <li>Attribution is not required to use the icons.</li>
-                      </ul>
-
-                      <h4>What you can do with it</h4>
-
-                      <ul role="list">
-                        <li>Use them freely in your personal and professional work.</li>
-                        <li>Make them your own. Change the colors to suit your project or brand.</li>
-                      </ul>
-
-                      <h4>What you can't do with it</h4>
-
-                      <ul role="list">
-                        <li>
-                          Don't be greedy. Selling or distributing these icons in their original or modified state is prohibited.
-                        </li>
-                        <li>
-                          Don't be evil. These icons cannot be used on websites or applications that promote illegal or immoral beliefs or activities.
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </el-tab-panels>
-              </el-tab-group>
+              <.reviews form={@review_form} current_scope={@current_scope} reviews={@reviews} />
             </div>
           </div>
         </div>
@@ -332,7 +264,7 @@ defmodule CursoGuiaWeb.CourseLive.Show do
     ~H"""
     <.link
       navigate={~p"/platforms/#{@course.platform.id}"}
-      class="bg-gray-50 rounded-lg flex items-center gap-4 bg-gray-100 px-6 py-3 border border-gray-200 w-full max-w-xl"
+      class="bg-gray-50 rounded-lg flex items-center gap-4 px-6 py-3 border border-gray-200 w-full max-w-xl"
     >
       <img src={@course.platform.logo} alt="Logo" class="w-8 h-8 rounded-full object-contain" />
       <div class="flex flex-col">
