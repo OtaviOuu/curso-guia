@@ -334,8 +334,7 @@ defmodule CursoGuiaWeb.CourseLive.Show do
             field={@form[:rating]}
             id="rating"
             type="number"
-            min="1"
-            max="10"
+            phx-debounce="500"
             placeholder="Rate the course"
           />
 

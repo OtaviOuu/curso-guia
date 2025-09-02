@@ -17,5 +17,10 @@ defmodule CursoGuia.Reviews.Review do
     |> cast(attrs, [:rating, :comment, :course_id, :user_id])
     |> validate_required([:rating, :comment, :course_id, :user_id])
     |> validate_length(:comment, min: 5, max: 500)
+    |> validate_number(:rating,
+      greater_than_or_equal_to: 1,
+      less_than_or_equal_to: 10,
+      message: "must be between 1 and 10"
+    )
   end
 end
