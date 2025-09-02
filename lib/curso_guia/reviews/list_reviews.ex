@@ -2,7 +2,12 @@ defmodule CursoGuia.Reviews.ListReviews do
   alias CursoGuia.Repo
   alias CursoGuia.Reviews.Review
 
+  import Ecto.Query, only: [order_by: 2]
+
   def call(course_id) do
-    Repo.all_by(Review, course_id: course_id)
+    Review
+    |> order_by(desc: :inserted_at)
+    |> Repo.all_by(course_id: course_id)
+    |> Repo.preload(:user)
   end
 end
