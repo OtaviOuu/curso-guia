@@ -421,6 +421,17 @@ defmodule CursoGuiaWeb.CourseLive.Show do
   end
 
   def handle_info({:review_created, review}, socket) do
-    {:noreply, assign(socket, :reviews, [review | socket.assigns.reviews])}
+    reviews = [review | socket.assigns.reviews]
+
+    socket =
+      socket
+      |> put_flash(:info, "New review created")
+      |> assign(:reviews, reviews)
+      |> update(:average_rating, fn _ ->
+        (Enum.sum(Enum.map(reviews, & &1.rating)) / length(reviews))
+        |> round()
+      end)
+
+    {:noreply, socket}
   end
 end
