@@ -18,8 +18,19 @@ alias CursoGuia.Platforms.Platform
 case Platforms.create_platform(%{
        name: "Hotmart",
        logo:
-         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvpm4doKmXcVu6Lw4RbeDf-vthN1Z8r5zsTQ&s",
+         "https://yt3.googleusercontent.com/zPZAtHKzLa6qJ0cuu9RgTUHmO6609oK5Dwn5G1Gx9OQBLY5m4gmmi9hRJznf7EMkRl-82HOmwA=s900-c-k-c0x00ffffff-no-rj",
        href: "http://hotmart.com"
+     }) do
+  {:ok, platform} -> IO.puts("Created platform #{platform.name}")
+  {:error, changeset} -> IO.inspect(changeset.errors)
+end
+
+case Platforms.create_platform(%{
+       name: "Eduzz",
+       logo:
+         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRny_5bc-ixZfOfvU224CHIfsG-7AQl4F3xuA&s
+",
+       href: "https://www.eduzz.com/"
      }) do
   {:ok, platform} -> IO.puts("Created platform #{platform.name}")
   {:error, changeset} -> IO.inspect(changeset.errors)
@@ -43,6 +54,18 @@ case Courses.create_course(%{
        price: 100,
        rating: 0,
        platform_id: 1
+     }) do
+  {:ok, course} -> IO.puts("Created course #{course.title}")
+  {:error, changeset} -> IO.inspect(changeset.errors)
+end
+
+case Courses.create_course(%{
+       title: "Foguete",
+       description: "Learn the basics of JS again.",
+       cover: "https://cdn.eduzzcdn.com/myeduzz/upload/10/8c/108cb56fe8d94a28b84b238bcabc9276",
+       price: 100,
+       rating: 0,
+       platform_id: 3
      }) do
   {:ok, course} -> IO.puts("Created course #{course.title}")
   {:error, changeset} -> IO.inspect(changeset.errors)
