@@ -23,8 +23,6 @@ defmodule CursoGuiaWeb.CourseLive.Show do
   end
 
   defp maybe_form(socket) when socket.assigns.current_scope do
-    IO.inspect("socket.assigns.current_scope")
-
     change_review =
       Reviews.change_review(%{
         course_id: socket.assigns.course.id,
@@ -251,6 +249,8 @@ defmodule CursoGuiaWeb.CourseLive.Show do
     <div id="tab-panel-reviews" class="-mb-10">
       <h3 class="sr-only">Customer Reviews</h3>
       <.message_input :if={@current_scope} form={@form} />
+      <.message_input_blocked :if={!@current_scope} form={@form} />
+
       <div class="mt-10 space-y-6">
         <.review_card :for={review <- @reviews} review={review} />
       </div>
@@ -357,6 +357,26 @@ defmodule CursoGuiaWeb.CourseLive.Show do
             </div>
           </div>
         </.form>
+      </div>
+    </div>
+    """
+  end
+
+  def message_input_blocked(assigns) do
+    ~H"""
+    <div class="flex items-start space-x-4">
+      <div class="min-w-0 flex-1">
+        <div class="rounded-lg bg-gray-50 border border-gray-200 px-4 py-3 text-center">
+          <p class="text-gray-500 text-sm">
+            Faça login para avaliar o curso
+          </p>
+          <.link
+            navigate={~p"/users/log-in"}
+            class="mt-2 inline-block rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          >
+            Fazer login
+          </.link>
+        </div>
       </div>
     </div>
     """
