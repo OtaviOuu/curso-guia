@@ -103,28 +103,13 @@ defmodule CursoGuiaWeb.CourseLive.Show do
                         {@course.views} views
                       </span>
                     </li>
-                    <li class="pl-2">
-                      <span class="inline-flex items-center gap-x-1.5 rounded-full bg-red-100 px-2 py-1 text-xs font-medium text-red-700">
-                        <svg viewBox="0 0 6 6" aria-hidden="true" class="size-1.5 fill-red-500">
-                          <circle r="3" cx="3" cy="3" />
-                        </svg>
-                        {@course.platform.name}
-                      </span>
-                    </li>
-
                     <li class="pl-2">Drawn on 24 x 24 pixel grid</li>
                   </ul>
                 </div>
               </div>
 
               <div class="mt-10 border-t border-gray-200 pt-10">
-                <h3 class="text-sm font-medium text-gray-900">License</h3>
-                <p class="mt-4 text-sm text-gray-500">
-                  For personal and professional use. You cannot resell or redistribute these icons in their original or modified state.
-                  <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">
-                    Read full license
-                  </a>
-                </p>
+                <.platform_banner course={@course} />
               </div>
 
               <div class="mt-10 border-t border-gray-200 pt-10">
@@ -387,6 +372,23 @@ defmodule CursoGuiaWeb.CourseLive.Show do
         </div>
       </div>
     </div>
+    """
+  end
+
+  def platform_banner(assigns) do
+    ~H"""
+    <.link
+      navigate={~p"/platforms/#{@course.platform.id}"}
+      class="flex items-center gap-4 bg-gray-100 rounded-lg px-6 py-3 shadow-md w-full max-w-xl"
+    >
+      <img src={@course.platform.logo} alt="Logo" class="w-8 h-8 rounded-full object-contain" />
+      <div class="flex flex-col">
+        <span class="text-lg font-semibold">{@course.platform.name}</span>
+        <span class="text-sm text-red-800">
+          {"desc talvez"}
+        </span>
+      </div>
+    </.link>
     """
   end
 
