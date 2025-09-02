@@ -5,6 +5,10 @@ defmodule CursoGuiaWeb.CourseLive.Show do
   alias CursoGuia.Reviews
 
   def mount(%{"id" => course_id}, _session, socket) do
+    if connected?(socket) do
+      Reviews.subscribe_to_reviews_created(course_id)
+    end
+
     course = Courses.get_course(course_id)
     reviews = Reviews.list_reviews(course_id)
 
@@ -414,5 +418,9 @@ defmodule CursoGuiaWeb.CourseLive.Show do
        :review_form,
        to_form(change_review, action: :validate, as: :review)
      )}
+  end
+
+  def handle_info({:review_created, review}, socket) do
+    {:noreply, assign(socket, :reviews, [review | socket.assigns.reviews])}
   end
 end
