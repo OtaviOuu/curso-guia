@@ -7,6 +7,9 @@ defmodule CursoGuia.Reviews.CreateReview do
     attrs
     |> Review.changeset()
     |> Repo.insert()
-    |> PubSub.PublishReviewToCourseReviewChannel.call()
+    |> case do
+      {:ok, review} -> PubSub.PublishReviewToCourseReviewChannel.call(review)
+      {:error, changeset} -> {:error, changeset}
+    end
   end
 end
