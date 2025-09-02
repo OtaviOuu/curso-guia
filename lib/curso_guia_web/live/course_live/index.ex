@@ -49,26 +49,55 @@ defmodule CursoGuiaWeb.CourseLive.Index do
           </div>
         </div>
       </div>
-
-      <div class="mt-4 flex items-center justify-between space-x-8 text-base font-medium text-gray-900">
+      <div class="mt-4 flex items-start justify-between text-base font-medium text-gray-900">
         <h3>
-          <.link navigate={~p"/courses/#{@course.id}"} class="hover:underline">
+          <div
+            phx-click="click_course"
+            phx-value-id={@course.id}
+            phx-value-views={@course.views}
+            class="hover:underline cursor-pointer"
+          >
             <span aria-hidden="true" class="absolute inset-0"></span> {@course.title}
-          </.link>
+          </div>
         </h3>
-        <p>${@course.price |> cents_to_brl()}</p>
+        <p class="text-base text-gray-900">${@course.price |> cents_to_brl()}</p>
       </div>
-
-      <div class="mt-1 flex items-center gap-2 text-sm text-gray-500">
-        <img
-          src={@course.platform.logo}
-          alt={@course.platform.name}
-          class="h-4 w-4 object-contain"
-        />
-        <span>{@course.platform.name}</span>
+      <div class="mt-1 flex items-center justify-between text-sm text-gray-500">
+        <div class="flex items-center gap-2">
+          <img
+            src={@course.platform.logo}
+            alt={@course.platform.name}
+            class="h-4 w-4 object-contain"
+          />
+          <span>{@course.platform.name}</span>
+        </div>
+        <div class="flex items-center gap-1">
+          <.icon name="hero-eye" class="h-4 w-4 text-gray-400" />
+          <span>{@course.views} views</span>
+        </div>
       </div>
     </div>
     """
+  end
+
+  def handle_event("click_course", %{"id" => id, "views" => views}, socket) do
+    updated_views = String.to_integer(views) + 1
+
+    case Courses.update_course(id, %{views: updated_views}) do
+      {:ok, _course} ->
+        socket =
+          socket
+          |> push_navigate(to: ~p"/courses/#{id}")
+
+        {:noreply, socket}
+
+      {:error, changeset} ->
+        socket =
+          socket
+          |> put_flash(:error, "Error...: #{changeset.errors}")
+
+        {:noreply, socket}
+    end
   end
 
   defp cents_to_brl(cents) do

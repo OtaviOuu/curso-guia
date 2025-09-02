@@ -95,8 +95,16 @@ defmodule CursoGuiaWeb.CourseLive.Show do
                     role="list"
                     class="list-disc space-y-1 pl-5 text-sm/6 text-gray-500 marker:text-gray-300"
                   >
+                    <li class="pl-2">
+                      <span class="inline-flex items-center gap-x-1.5 rounded-full bg-red-100 px-2 py-1 text-xs font-medium text-red-700">
+                        <svg viewBox="0 0 6 6" aria-hidden="true" class="size-1.5 fill-red-500">
+                          <circle r="3" cx="3" cy="3" />
+                        </svg>
+                        {@course.views} views
+                      </span>
+                    </li>
                     <li class="pl-2">{@course.platform.name}</li>
-                    <li class="pl-2">Compatible with Figma, Sketch, and Adobe XD</li>
+
                     <li class="pl-2">Drawn on 24 x 24 pixel grid</li>
                   </ul>
                 </div>
