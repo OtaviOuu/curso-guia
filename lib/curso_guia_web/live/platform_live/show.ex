@@ -3,7 +3,13 @@ defmodule CursoGuiaWeb.PlatformLive.Show do
 
   def mount(%{"id" => id}, _session, socket) do
     platform = CursoGuia.Platforms.get_platform(id)
-    {:ok, assign(socket, platform: platform)}
+
+    socket =
+      socket
+      |> assign(page_title: platform.name)
+      |> assign(platform: platform)
+
+    {:ok, socket}
   end
 
   def render(assigns) do

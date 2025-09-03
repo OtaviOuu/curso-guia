@@ -1,6 +1,10 @@
 defmodule CursoGuiaWeb.LandingLive.Index do
   use CursoGuiaWeb, :live_view
 
+  def mount(_, _, socket) do
+    {:ok, assign(socket, page_title: "Home")}
+  end
+
   def render(assigns) do
     ~H"""
     <.hero />

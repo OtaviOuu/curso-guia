@@ -14,6 +14,7 @@ defmodule CursoGuiaWeb.CourseLive.Show do
 
     socket =
       socket
+      |> assign(page_title: String.slice(course.title, 0, 20))
       |> assign(course: course)
       |> assign(reviews: reviews)
       |> assign(average_rating: course.rating)
