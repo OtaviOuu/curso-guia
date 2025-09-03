@@ -382,13 +382,11 @@ defmodule CursoGuiaWeb.CourseLive.Show do
 
   def handle_info({:review_deleted, review}, socket) do
     reviews = List.delete(socket.assigns.reviews, review)
-    new_rating = review.course.rating
 
     socket =
       socket
       |> put_flash(:info, "Review deleted")
       |> assign(reviews: reviews)
-      |> assign(average_rating: new_rating)
 
     {:noreply, socket}
   end
