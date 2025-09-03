@@ -32,7 +32,7 @@ defmodule CursoGuia.Courses.Course do
     changeset
     |> validate_required([:title, :description, :price, :platform_id])
     |> validate_length(:title, min: 3, max: 100)
-    |> validate_length(:description, min: 3, max: 100)
+    |> validate_length(:description, min: 3, max: 1000)
     |> validate_number(:price, greater_than: 0)
     |> validate_format(:cover, ~r/^https?:\/\//, message: "must start with http or https")
     |> validate_number(:rating, greater_than_or_equal_to: 0, less_than_or_equal_to: 10)
