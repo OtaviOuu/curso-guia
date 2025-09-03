@@ -33,6 +33,7 @@ defmodule CursoGuiaWeb.PlatformLive.Show do
                 class="aspect-3/2 w-full rounded-lg bg-gray-100 object-cover"
               />
             </div>
+            <h3 class="mt-16 text-lg font-medium text-gray-900">Cursos:</h3>
             <div class="mt-16 grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-3">
               <.simple_course_card :for={course <- @platform.courses} course={course} />
             </div>
