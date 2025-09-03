@@ -34,56 +34,32 @@ defmodule CursoGuiaWeb.PlatformLive.Show do
               />
             </div>
             <div class="mt-16 grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-3">
-              <div class="sm:flex lg:block">
-                <div class="sm:shrink-0">
-                  <img
-                    src="https://tailwindcss.com/plus-assets/img/ecommerce/icons/icon-shipping-simple.svg"
-                    alt=""
-                    class="size-16"
-                  />
-                </div>
-                <div class="mt-4 sm:mt-0 sm:ml-6 lg:mt-6 lg:ml-0">
-                  <h3 class="text-sm font-medium text-gray-900">Free shipping</h3>
-                  <p class="mt-2 text-sm text-gray-500">
-                    It&#039;s not actually free we just price it into the products. Someone&#039;s paying for it, and it&#039;s not us.
-                  </p>
-                </div>
-              </div>
-              <div class="sm:flex lg:block">
-                <div class="sm:shrink-0">
-                  <img
-                    src="https://tailwindcss.com/plus-assets/img/ecommerce/icons/icon-warranty-simple.svg"
-                    alt=""
-                    class="size-16"
-                  />
-                </div>
-                <div class="mt-4 sm:mt-0 sm:ml-6 lg:mt-6 lg:ml-0">
-                  <h3 class="text-sm font-medium text-gray-900">10-year warranty</h3>
-                  <p class="mt-2 text-sm text-gray-500">
-                    If it breaks in the first 10 years we&#039;ll replace it. After that you&#039;re on your own though.
-                  </p>
-                </div>
-              </div>
-              <div class="sm:flex lg:block">
-                <div class="sm:shrink-0">
-                  <img
-                    src="https://tailwindcss.com/plus-assets/img/ecommerce/icons/icon-exchange-simple.svg"
-                    alt=""
-                    class="size-16"
-                  />
-                </div>
-                <div class="mt-4 sm:mt-0 sm:ml-6 lg:mt-6 lg:ml-0">
-                  <h3 class="text-sm font-medium text-gray-900">Exchanges</h3>
-                  <p class="mt-2 text-sm text-gray-500">
-                    If you don&#039;t like it, trade it to one of your friends for something of theirs. Don&#039;t send it here though.
-                  </p>
-                </div>
-              </div>
+              <.simple_course_card :for={course <- @platform.courses} course={course} />
             </div>
           </div>
         </div>
       </div>
     </Layouts.app>
+    """
+  end
+
+  def simple_course_card(assigns) do
+    ~H"""
+    <.link navigate={~p"/courses/#{@course.id}"} class="sm:flex lg:block">
+      <div class="sm:shrink-0">
+        <img
+          src={@course.cover}
+          alt=""
+          class="size-16"
+        />
+      </div>
+      <div class="mt-4 sm:mt-0 sm:ml-6 lg:mt-6 lg:ml-0">
+        <h3 class="text-sm font-medium text-gray-900">{@course.title}</h3>
+        <p class="mt-2 text-sm text-gray-500">
+          Imagine aqui uma descrição do curso.
+        </p>
+      </div>
+    </.link>
     """
   end
 end

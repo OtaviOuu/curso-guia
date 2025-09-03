@@ -104,7 +104,6 @@ defmodule CursoGuiaWeb.CourseLive.Show do
                         {@course.views} views
                       </span>
                     </li>
-                    <li class="pl-2">Drawn on 24 x 24 pixel grid</li>
                   </ul>
                 </div>
               </div>

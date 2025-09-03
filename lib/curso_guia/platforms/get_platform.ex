@@ -4,5 +4,7 @@ defmodule CursoGuia.Platforms.GetPlatform do
 
   def call(id) do
     Repo.get_by(Platform, id: id)
+    # meio ruim
+    |> Repo.preload(:courses)
   end
 end
