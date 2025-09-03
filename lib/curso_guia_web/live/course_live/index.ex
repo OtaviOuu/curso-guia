@@ -14,13 +14,13 @@ defmodule CursoGuiaWeb.CourseLive.Index do
       <div class="bg-white">
         <div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
           <div class="flex items-center justify-between space-x-4">
-            <h2 class="text-lg font-medium text-gray-900">Customers also viewed</h2>
-            <a
-              href="#"
+            <h2 class="text-lg font-medium text-gray-900">Cursos</h2>
+            <.link
+              navigate={~p"/courses"}
               class="text-sm font-medium whitespace-nowrap text-indigo-600 hover:text-indigo-500"
             >
-              View all <span aria-hidden="true"><.icon name="hero-arrow-right" /></span>
-            </a>
+              Todos <span aria-hidden="true"><.icon name="hero-arrow-right" /></span>
+            </.link>
           </div>
           <div class="mt-6 grid grid-cols-1 gap-x-8 gap-y-8 sm:grid-cols-2 sm:gap-y-10 lg:grid-cols-4">
             <.course_card :for={course <- @courses} course={course} />
@@ -45,7 +45,7 @@ defmodule CursoGuiaWeb.CourseLive.Index do
           class="absolute inset-0 flex items-end p-4 opacity-0 group-hover:opacity-100"
         >
           <div class="w-full rounded-md bg-white/75 px-4 py-2 text-center text-sm font-medium text-gray-900 backdrop-blur-sm backdrop-filter">
-            View Product
+            Ver curso
           </div>
         </div>
       </div>

@@ -10,6 +10,7 @@ defmodule CursoGuiaWeb.CourseLive.Show do
     end
 
     course = Courses.get_course(course_id)
+    {:ok, course_description} = MDEx.to_html(course.description, extension: [shortcodes: true])
     reviews = Reviews.list_reviews(course_id)
 
     socket =
@@ -18,6 +19,7 @@ defmodule CursoGuiaWeb.CourseLive.Show do
       |> assign(course: course)
       |> assign(reviews: reviews)
       |> assign(average_rating: course.rating)
+      |> assign(:course_description, course_description)
       |> maybe_form()
 
     {:ok, socket}
@@ -68,9 +70,9 @@ defmodule CursoGuiaWeb.CourseLive.Show do
                 <.stars rating={@average_rating} />
               </div>
 
-              <p class="mt-6 text-gray-500">
-                {@course.description}
-              </p>
+              <div class="prose mt-6 text-gray-500">
+                {@course_description |> raw()}
+              </div>
 
               <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2">
                 <button
