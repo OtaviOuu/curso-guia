@@ -44,6 +44,9 @@ defmodule CursoGuiaWeb.Router do
       # Platforms
       live "/platforms", PlatformLive.Index, :index
       live "/platforms/:id", PlatformLive.Show, :show
+
+      # Geral Chat
+      live "/chat", ChatLive.Index, :index
     end
   end
 

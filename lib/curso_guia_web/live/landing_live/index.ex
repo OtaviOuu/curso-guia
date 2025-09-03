@@ -69,8 +69,8 @@ defmodule CursoGuiaWeb.LandingLive.Index do
             <.link navigate={~p"/platforms"} class="text-sm/6 font-semibold text-gray-900">
               Plataformas
             </.link>
-            <.link navigate={~p"/courses"} class="text-sm/6 font-semibold text-gray-900">
-              Contato
+            <.link navigate={~p"/chat"} class="text-sm/6 font-semibold text-gray-900">
+              Chat
             </.link>
           </div>
           <div class="hidden lg:flex lg:flex-1 lg:justify-end">
