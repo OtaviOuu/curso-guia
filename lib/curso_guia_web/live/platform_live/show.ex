@@ -1,6 +1,5 @@
 defmodule CursoGuiaWeb.PlatformLive.Show do
   use CursoGuiaWeb, :live_view
-  alias CursoGuia.Platforms
 
   def mount(%{"id" => id}, _session, socket) do
     platform = CursoGuia.Platforms.get_platform(id)
