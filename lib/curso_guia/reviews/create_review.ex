@@ -11,7 +11,7 @@ defmodule CursoGuia.Reviews.CreateReview do
     |> case do
       {:ok, review} ->
         UpdateCourseRating.call(review.course_id)
-        PubSub.PublishReviewToCourseReviewChannel.call(review)
+        PubSub.PublishReviewToCourseReviewChannel.call({:review_created, review})
 
       {:error, changeset} ->
         {:error, changeset}

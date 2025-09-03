@@ -2,8 +2,10 @@ defmodule CursoGuia.Reviews do
   alias CursoGuia.Reviews.ListReviews
   alias CursoGuia.Reviews.CreateReview
   alias CursoGuia.Reviews.GetChangeset
+  alias CursoGuia.Reviews.DeleteReview
   alias CursoGuia.Reviews.PubSub
   defdelegate change_review(attrs), to: GetChangeset, as: :call
+  defdelegate delete_review(scope, review_id), to: DeleteReview, as: :call
   defdelegate list_reviews(course_id), to: ListReviews, as: :call
   defdelegate create_review(attrs), to: CreateReview, as: :call
 

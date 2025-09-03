@@ -131,7 +131,7 @@ defmodule CursoGuiaWeb.CourseLive.Show do
       <.message_input_blocked :if={!@current_scope} form={@form} />
 
       <div class="mt-10 space-y-6">
-        <.review_card :for={review <- @reviews} review={review} />
+        <.review_card :for={review <- @reviews} review={review} current_scope={@current_scope} />
       </div>
     </div>
     """
@@ -139,7 +139,7 @@ defmodule CursoGuiaWeb.CourseLive.Show do
 
   def review_card(assigns) do
     ~H"""
-    <div class="flex space-x-4 text-sm text-gray-500">
+    <div class="flex space-x-4 text-sm text-gray-500 relative">
       <div class="flex-none py-10">
         <img
           src="https://fabianlee.org/wp-content/uploads/2017/05/golang-color-icon2.png"
@@ -147,7 +147,8 @@ defmodule CursoGuiaWeb.CourseLive.Show do
           class="size-10 rounded-full bg-gray-100"
         />
       </div>
-      <div class="py-10">
+
+      <div class="py-10 flex-1">
         <h3 class="font-medium text-gray-900">{@review.user.username}</h3>
         <p><time>{@review.inserted_at}</time></p>
         <.stars rating={@review.rating} />
@@ -158,6 +159,19 @@ defmodule CursoGuiaWeb.CourseLive.Show do
             {@review.comment}
           </p>
         </div>
+      </div>
+
+      <div
+        :if={@current_scope && @current_scope.user.is_admin}
+        class="absolute top-4 right-4"
+        phx-click="delete_review"
+        phx-value-id={@review.id}
+        phx-confirm="Are you sure you want to delete this review?"
+      >
+        <.icon
+          name="hero-trash"
+          class="w-5 h-5 text-red-500 hover:text-red-700 cursor-pointer"
+        />
       </div>
     </div>
     """
@@ -277,6 +291,24 @@ defmodule CursoGuiaWeb.CourseLive.Show do
     """
   end
 
+  def handle_event("delete_review", %{"id" => review_id}, socket) do
+    case Reviews.delete_review(socket.assigns.current_scope, review_id) do
+      {:ok, _review} ->
+        socket =
+          socket
+          |> assign(:reviews, List.delete(socket.assigns.reviews, review_id))
+
+        {:noreply, socket}
+
+      _ ->
+        socket =
+          socket
+          |> put_flash(:error, "Failed to delete review")
+
+        {:noreply, socket}
+    end
+  end
+
   def handle_event(
         "post_review",
         %{"review" => %{"comment" => review_content, "rating" => rating}},
@@ -342,6 +374,19 @@ defmodule CursoGuiaWeb.CourseLive.Show do
     socket =
       socket
       |> put_flash(:info, "New review created")
+      |> assign(reviews: reviews)
+      |> assign(average_rating: new_rating)
+
+    {:noreply, socket}
+  end
+
+  def handle_info({:review_deleted, review}, socket) do
+    reviews = List.delete(socket.assigns.reviews, review)
+    new_rating = review.course.rating
+
+    socket =
+      socket
+      |> put_flash(:info, "Review deleted")
       |> assign(reviews: reviews)
       |> assign(average_rating: new_rating)
 
