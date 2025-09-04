@@ -21,14 +21,13 @@ defmodule CursoGuia.Platforms.GetAttrsFromPlatform do
 
     title =
       html_tree
-      |> Floki.find("#title")
+      |> Floki.find("#title h1")
       |> Floki.text()
 
     desc =
       html_tree
-      # desc vem em várias tags. Pra cada tag, add uma quebra de linha
       |> Floki.find("#description ._text-gray-600")
-      |> Floki.text()
+      |> Floki.raw_html()
 
     cover =
       html_tree
