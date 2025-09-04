@@ -21,41 +21,41 @@ defmodule CursoGuiaWeb.CourseLive.New do
   def render(assigns) do
     ~H"""
     <Layouts.app current_scope={@current_scope} flash={@flash}>
-      <div class="flex items-center">
-        <div class="relative flex justify-start">
-          <span class="bg-white pr-3 text-base font-semibold text-gray-900">Projects</span>
+      <div class="space-y-6">
+        <div class="flex items-center">
+          <div class="relative flex justify-start">
+            <span class="bg-white pr-3 text-base font-semibold text-gray-900">Spider</span>
+          </div>
         </div>
-        <div aria-hidden="true" class="w-full border-t border-gray-300"></div>
-      </div>
 
-      <.form for={@course_form} phx-submit="save">
-        <.input field={@course_form[:title]} label="Title" />
-        <.input field={@course_form[:description]} label="Description" />
-        <.input field={@course_form[:cover]} label="Cover" />
-        <.input field={@course_form[:href]} label="Link" />
-        <.input
-          field={@course_form[:platform_id]}
-          label="Platform"
-          type="select"
-          options={@platforms}
-        />
-        <.input field={@course_form[:price]} label="Price" type="number" />
+        <.form for={@platform_url_to_scrape_form} phx-submit="scrape">
+          <.input field={@platform_url_to_scrape_form[:url]} label="url" name="url" />
 
-        <.button>Save</.button>
-      </.form>
+          <.button>Search</.button>
+        </.form>
 
-      <div class="flex items-center">
-        <div class="relative flex justify-start">
-          <span class="bg-white pr-3 text-base font-semibold text-gray-900">Spider</span>
+        <div class="flex items-center">
+          <div class="relative flex justify-start">
+            <span class="bg-white pr-3 text-base font-semibold text-gray-900">Projects</span>
+          </div>
         </div>
-        <div aria-hidden="true" class="w-full border-t border-gray-300"></div>
+
+        <.form for={@course_form} phx-submit="save">
+          <.input field={@course_form[:title]} label="Title" />
+          <.input field={@course_form[:description]} label="Description" />
+          <.input field={@course_form[:cover]} label="Cover" />
+          <.input field={@course_form[:href]} label="Link" />
+          <.input
+            field={@course_form[:platform_id]}
+            label="Platform"
+            type="select"
+            options={@platforms}
+          />
+          <.input field={@course_form[:price]} label="Price" type="number" />
+
+          <.button>Save</.button>
+        </.form>
       </div>
-
-      <.form for={@platform_url_to_scrape_form} phx-submit="scrape">
-        <.input field={@platform_url_to_scrape_form[:url]} label="url" name="url" />
-
-        <.button>Search</.button>
-      </.form>
     </Layouts.app>
     """
   end
