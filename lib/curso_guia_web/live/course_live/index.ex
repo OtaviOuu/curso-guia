@@ -4,7 +4,7 @@ defmodule CursoGuiaWeb.CourseLive.Index do
   alias CursoGuia.Courses
 
   def mount(_params, _session, socket) do
-    courses = Courses.list_courses()
+    courses = Courses.list_courses(:views)
     {:ok, assign(socket, courses: courses)}
   end
 
