@@ -6,7 +6,7 @@ defmodule CursoGuiaWeb.CourseLive.New do
 
   def mount(_params, _session, socket) do
     changeset = Courses.change_course(%{})
-    platform_url_to_scrape_form = to_form(%{url: ""})
+    platform_url_to_scrape_form = to_form(%{"url" => ""})
     options_for_platforms = Platforms.list_platforms() |> Enum.map(&{&1.name, &1.id})
 
     socket =
@@ -32,6 +32,7 @@ defmodule CursoGuiaWeb.CourseLive.New do
         <.input field={@course_form[:title]} label="Title" />
         <.input field={@course_form[:description]} label="Description" />
         <.input field={@course_form[:cover]} label="Cover" />
+        <.input field={@course_form[:href]} label="Link" />
         <.input
           field={@course_form[:platform_id]}
           label="Platform"
@@ -51,7 +52,7 @@ defmodule CursoGuiaWeb.CourseLive.New do
       </div>
 
       <.form for={@platform_url_to_scrape_form} phx-submit="scrape">
-        <.input field={@platform_url_to_scrape_form[:url]} label="url" />
+        <.input field={@platform_url_to_scrape_form[:url]} label="url" name="url" />
 
         <.button>Search</.button>
       </.form>
@@ -74,17 +75,13 @@ defmodule CursoGuiaWeb.CourseLive.New do
     end
   end
 
-  def handle_event("scrape", %{"url" => url}, socket) when length(url) > 0 do
-    current_live_view_pid = self()
-
-    Task.start_link(fn ->
-      send(current_live_view_pid, Platforms.get_attrs_from_platform(url))
-    end)
+  def handle_event("scrape", %{"url" => course_url}, socket) do
+    if String.trim(course_url) != "" do
+      fill_course_form(course_url)
+    end
 
     {:noreply, socket}
   end
-
-  def handle_event("scrape", _, socket), do: {:noreply, put_flash(socket, :error, "Invalid URL")}
 
   def handle_info({:ok, attrs}, socket) do
     IO.inspect(attrs)
@@ -95,5 +92,13 @@ defmodule CursoGuiaWeb.CourseLive.New do
       |> assign(course_form: to_form(changeset, action: :validate))
 
     {:noreply, socket}
+  end
+
+  defp fill_course_form(course_url) do
+    current_live_view_pid = self()
+
+    Task.start_link(fn ->
+      send(current_live_view_pid, Platforms.get_attrs_from_platform(course_url))
+    end)
   end
 end

@@ -67,7 +67,9 @@ defmodule CursoGuia.MixProject do
       {:jason, "~> 1.2"},
       {:dns_cluster, "~> 0.2.0"},
       {:bandit, "~> 1.5"},
-      {:hackney, "~> 1.9"}
+      {:hackney, "~> 1.9"},
+      {:mdex, "~> 0.8"},
+      {:floki, ">= 0.38.0"}
     ]
   end
 
