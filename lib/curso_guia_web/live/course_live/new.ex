@@ -93,6 +93,10 @@ defmodule CursoGuiaWeb.CourseLive.New do
     {:noreply, socket}
   end
 
+  def handle_info({:error, msg}, socket) do
+    {:noreply, put_flash(socket, :error, msg)}
+  end
+
   defp fill_course_form(course_url) do
     current_live_view_pid = self()
 
