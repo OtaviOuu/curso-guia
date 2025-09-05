@@ -6,7 +6,7 @@ defmodule CursoGuiaWeb.CourseLive.Show do
 
   def mount(%{"id" => course_id}, _session, socket) do
     if connected?(socket) do
-      Reviews.subscribe_to_reviews_created(course_id)
+      Reviews.subscribe(course_id)
     end
 
     course = Courses.get_course(course_id)

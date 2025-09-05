@@ -9,7 +9,7 @@ defmodule CursoGuia.Reviews do
   defdelegate list_reviews(course_id), to: ListReviews, as: :call
   defdelegate create_review(attrs), to: CreateReview, as: :call
 
-  defdelegate subscribe_to_reviews_created(course_id),
+  defdelegate subscribe(course_id),
     to: PubSub.SubscribeToCourseReviewChannel,
     as: :call
 end
