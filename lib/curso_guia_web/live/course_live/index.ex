@@ -5,7 +5,13 @@ defmodule CursoGuiaWeb.CourseLive.Index do
 
   def mount(_params, _session, socket) do
     courses = Courses.list_courses(:views)
-    {:ok, assign(socket, courses: courses)}
+
+    socket =
+      socket
+      |> assign(page_title: "Cursos")
+      |> assign(courses: courses)
+
+    {:ok, socket}
   end
 
   def render(assigns) do
