@@ -6,4 +6,8 @@ defmodule CursoGuia.Courses do
   defdelegate create_course(attrs), to: Courses.CreateCourse, as: :call
   defdelegate get_course(id), to: Courses.GetCourse, as: :call
   defdelegate update_course(id, attrs), to: Courses.UpdateCourse, as: :call
+
+  defdelegate get_course_attrs(url),
+    to: Courses.Scraper.CourseAttrsScraper,
+    as: :call
 end

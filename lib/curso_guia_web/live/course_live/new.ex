@@ -84,7 +84,6 @@ defmodule CursoGuiaWeb.CourseLive.New do
   end
 
   def handle_info({:ok, attrs}, socket) do
-    IO.inspect(attrs)
     changeset = Courses.change_course(attrs)
 
     socket =
@@ -98,7 +97,7 @@ defmodule CursoGuiaWeb.CourseLive.New do
     current_live_view_pid = self()
 
     Task.start_link(fn ->
-      send(current_live_view_pid, Platforms.get_attrs_from_platform(course_url))
+      send(current_live_view_pid, Courses.get_course_attrs(course_url))
     end)
   end
 end
