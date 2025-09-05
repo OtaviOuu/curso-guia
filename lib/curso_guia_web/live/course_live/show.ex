@@ -17,7 +17,7 @@ defmodule CursoGuiaWeb.CourseLive.Show do
       socket
       |> assign(page_title: String.slice(course.title, 0, 20))
       |> assign(course: course)
-      |> assign(reviews: reviews)
+      |> stream(:reviews, reviews)
       |> assign(average_rating: course.rating)
       |> maybe_form()
 
@@ -114,8 +114,11 @@ defmodule CursoGuiaWeb.CourseLive.Show do
               </div>
             </div>
 
-            <div class="mx-auto mt-16 w-full max-w-2xl lg:col-span-4 lg:mt-0 lg:max-w-none">
-              <.reviews form={@review_form} current_scope={@current_scope} reviews={@reviews} />
+            <div
+              class="mx-auto mt-16 w-full max-w-2xl lg:col-span-4 lg:mt-0 lg:max-w-none"
+              id="reviews-section"
+            >
+              <.reviews form={@review_form} current_scope={@current_scope} streams={@streams} />
             </div>
           </div>
         </div>
@@ -126,13 +129,18 @@ defmodule CursoGuiaWeb.CourseLive.Show do
 
   def reviews(assigns) do
     ~H"""
-    <div id="tab-panel-reviews" class="-mb-10">
+    <div id="reviews" class="-mb-10">
       <h3 class="sr-only">Customer Reviews</h3>
       <.message_input :if={@current_scope} form={@form} />
-      <.message_input_blocked :if={!@current_scope} form={@form} />
+      <.message_input_blocked :if={!@current_scope} />
 
-      <div class="mt-10 space-y-6">
-        <.review_card :for={review <- @reviews} review={review} current_scope={@current_scope} />
+      <div class="mt-10 space-y-6" phx-update="stream" id="reviews-cards">
+        <.review_card
+          :for={{dom_id, review} <- @streams.reviews}
+          review={review}
+          current_scope={@current_scope}
+          id={dom_id}
+        />
       </div>
     </div>
     """
@@ -140,41 +148,42 @@ defmodule CursoGuiaWeb.CourseLive.Show do
 
   def review_card(assigns) do
     ~H"""
-    <div class="flex space-x-4 text-sm text-gray-500 relative">
-      <div class="flex-none py-10">
-        <img
-          src="https://fabianlee.org/wp-content/uploads/2017/05/golang-color-icon2.png"
-          alt="Profile image"
-          class="size-10 rounded-full bg-gray-100"
-        />
-      </div>
+    <section id={@id}>
+      <div class="flex space-x-4 text-sm text-gray-500 relative">
+        <div class="flex-none py-10">
+          <img
+            src="https://fabianlee.org/wp-content/uploads/2017/05/golang-color-icon2.png"
+            alt="Profile image"
+            class="size-10 rounded-full bg-gray-100"
+          />
+        </div>
 
-      <div class="py-10 flex-1">
-        <h3 class="font-medium text-gray-900">{@review.user.username}</h3>
-        <p><time>{@review.inserted_at}</time></p>
-        <.stars rating={@review.rating} />
-        <p class="sr-only">{@review.rating} out of 5 stars</p>
+        <div class="py-10 flex-1">
+          <h3 class="font-medium text-gray-900">{@review.user.username}</h3>
+          <p><time>{@review.inserted_at}</time></p>
+          <.stars rating={@review.rating} />
+          <p class="sr-only">{@review.rating} out of 5 stars</p>
 
-        <div class="mt-4 text-sm/6 text-gray-500">
-          <p>
-            {@review.comment}
-          </p>
+          <div class="mt-4 text-sm/6 text-gray-500">
+            <p>
+              {@review.comment}
+            </p>
+          </div>
+        </div>
+
+        <div
+          :if={@current_scope && @current_scope.user.is_admin}
+          class="absolute top-4 right-4"
+          phx-click="delete_review"
+          phx-value-id={@review.id}
+        >
+          <.icon
+            name="hero-trash"
+            class="w-5 h-5 text-red-500 hover:text-red-700 cursor-pointer"
+          />
         </div>
       </div>
-
-      <div
-        :if={@current_scope && @current_scope.user.is_admin}
-        class="absolute top-4 right-4"
-        phx-click="delete_review"
-        phx-value-id={@review.id}
-        phx-confirm="Are you sure you want to delete this review?"
-      >
-        <.icon
-          name="hero-trash"
-          class="w-5 h-5 text-red-500 hover:text-red-700 cursor-pointer"
-        />
-      </div>
-    </div>
+    </section>
     """
   end
 
@@ -295,11 +304,7 @@ defmodule CursoGuiaWeb.CourseLive.Show do
   def handle_event("delete_review", %{"id" => review_id}, socket) do
     case Reviews.delete_review(socket.assigns.current_scope, review_id) do
       {:ok, _review} ->
-        socket =
-          socket
-          |> assign(:reviews, List.delete(socket.assigns.reviews, review_id))
-
-        {:noreply, socket}
+        {:noreply, put_flash(socket, :info, "Review deleted successfully")}
 
       _ ->
         socket =
@@ -369,25 +374,23 @@ defmodule CursoGuiaWeb.CourseLive.Show do
   end
 
   def handle_info({:review_created, review}, socket) do
-    reviews = [review | socket.assigns.reviews]
     new_rating = review.course.rating
 
     socket =
       socket
       |> put_flash(:info, "New review created")
-      |> assign(reviews: reviews)
+      |> stream_insert(:reviews, review)
       |> assign(average_rating: new_rating)
 
     {:noreply, socket}
   end
 
-  def handle_info({:review_deleted, review}, socket) do
-    reviews = List.delete(socket.assigns.reviews, review)
+  def handle_info({:deleted_review, review}, socket) do
+    dom_id = "reviews-#{review.id}"
 
     socket =
       socket
-      |> put_flash(:info, "Review deleted")
-      |> assign(reviews: reviews)
+      |> stream_delete_by_dom_id(:reviews, dom_id)
 
     {:noreply, socket}
   end

@@ -1,6 +1,6 @@
 defmodule CursoGuia.Reviews.PubSub.PublishReviewToCourseReviewChannel do
   alias CursoGuia.Repo
-  @channel "reviews:created"
+  @channel "reviews:updated"
 
   def call({event, review}) do
     Phoenix.PubSub.broadcast(

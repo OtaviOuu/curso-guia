@@ -12,9 +12,9 @@ defmodule CursoGuia.Reviews.UpdateCourseRating do
     end
   end
 
-  defp calculate_rating(reviews) when reviews > 0 do
+  defp calculate_rating([]), do: 0
+
+  defp calculate_rating(reviews) do
     (Enum.sum(Enum.map(reviews, & &1.rating)) / length(reviews)) |> round()
   end
-
-  defp calculate_rating(_), do: 0
 end
