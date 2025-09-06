@@ -5,7 +5,13 @@ defmodule CursoGuiaWeb.CoursesJSON do
 
   defp course_to_json_data(course) do
     %{
-      title: course.title
+      id: course.id,
+      title: course.title,
+      description: course.description,
+      cover: course.cover,
+      href: course.href,
+      rating: course.rating,
+      views: course.views
     }
   end
 end

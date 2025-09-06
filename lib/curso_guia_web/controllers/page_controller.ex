@@ -1,7 +1,0 @@
-defmodule CursoGuiaWeb.PageController do
-  use CursoGuiaWeb, :controller
-
-  def home(conn, _params) do
-    render(conn, :home)
-  end
-end
