@@ -3,6 +3,10 @@ defmodule CursoGuiaWeb.CoursesJSON do
     %{data: Enum.map(courses, &course_to_json_data/1)}
   end
 
+  def show(%{course: course}) do
+    %{data: course_to_json_data(course)}
+  end
+
   defp course_to_json_data(course) do
     %{
       id: course.id,

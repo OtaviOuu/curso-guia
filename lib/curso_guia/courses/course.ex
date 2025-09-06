@@ -8,7 +8,7 @@ defmodule CursoGuia.Courses.Course do
     field :title, :string
     field :description, :string
     field :cover, :string
-    field :price, :integer
+    field :price, :integer, default: 0
     field :href, :string
     field :rating, :integer, default: 0
     field :views, :integer, default: 0

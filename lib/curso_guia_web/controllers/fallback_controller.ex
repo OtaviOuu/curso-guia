@@ -7,4 +7,11 @@ defmodule CursoGuiaWeb.FallbackController do
     |> put_view(json: CursoGuiaWeb.ErrorJSON)
     |> render(:error, status: :not_found)
   end
+
+  def call(conn, {:error, changeset}) do
+    conn
+    |> put_status(:bad_request)
+    |> put_view(json: CursoGuiaWeb.ErrorJSON)
+    |> render(:error, changeset: changeset)
+  end
 end

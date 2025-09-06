@@ -24,12 +24,16 @@ defmodule CursoGuia.Courses.Scraper.Hotmart.GetHotmartCourseAttrs do
       |> Floki.find(".price--value")
       |> Floki.text()
 
+    # logica dps n sei calor daporra
+    platform_id = 1
+
     {:ok,
      %{
        "title" => title,
        "description" => desc,
        "cover" => cover,
-       "href" => url
+       "href" => url,
+       "platform_id" => platform_id
      }}
   end
 end

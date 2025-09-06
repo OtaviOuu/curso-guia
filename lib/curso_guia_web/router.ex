@@ -53,7 +53,7 @@ defmodule CursoGuiaWeb.Router do
   scope "/api", CursoGuiaWeb do
     pipe_through :api
 
-    resources "/courses", CoursesController, only: [:index, :show]
+    resources "/courses", CoursesController, only: [:index, :show, :create]
   end
 
   # Other scopes may use custom stacks.
